@@ -1,12 +1,12 @@
 import fetch from "node-fetch";
-
+// === IDK really===
 export const config = {
   api: {
     bodyParser: false, 
   },
 };
 
-
+// === Main thingy===
 function parseBody(bodyString) {
   return Object.fromEntries(new URLSearchParams(bodyString));
 }
@@ -33,23 +33,31 @@ export default async function handler(req, res) {
     return res.status(200).send(body.challenge);
   }
 
-  // ===Slash Commands===
+  // ===Slash commands===
   if (body?.command) {
     const { command, user_name } = body;
     let message = "";
 
     switch (command) {
-      case "/welcome":
-        message = `Hey <@${user_name}>!`;
+      case "/hello":
+        message = `Hi <@${user_name}> :60fps_parrot:!`;
         break;
-      default:
-        message = "Unknown command!";
+      case "/hackatime":
+        const username = body.text.trim();
+        const data1 = await fetch(`https://hackatime.hackclub.com/api/v1/users/${username}/stats`);
+        const info = await data1.json()
+
+        const totaltime = info.data.human_readable_total;
+        const streak = info.data.streak;
+
+        message = `@${user_name} has spent ${totaltime} coding and has a ${streak}-day streak!`;
+
     }
 
-    return res.status(200).send(message);
+    return res.status(200).json({response_type: "in_channel", text: message });
   }
 
-  // ===Member Joined Channel Event===
+  // ===Join message thing===
   const event = body?.event;
   if (event?.type === "member_joined_channel") {
     await fetch("https://slack.com/api/chat.postMessage", {
