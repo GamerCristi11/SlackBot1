@@ -50,7 +50,7 @@ export default async function handler(req, res) {
         const totaltime = info.data.human_readable_total;
         const streak = info.data.streak;
 
-        message = `@${user_name} has spent ${totaltime} coding and has a ${streak}-day streak!`;
+        message = `<@${user_name}> has spent ${totaltime} coding and has a ${streak}-day streak!`;
 
     }
 
