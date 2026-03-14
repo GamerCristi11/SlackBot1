@@ -19,11 +19,33 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         channel: event.channel,
-        text: `Hello <@${event.user}>!\nWelcome to YapaVille!`
+        text: `Hello <@${event.user}> :60fps_parrot:!\nWelcome to YappaVille!`
       })
     });
 
   }
+
+  // ===Slash Commands===
+  if (body?.command) {
+    const { command, user_name } = body;
+
+    let message = "";
+
+    switch(command) {
+      case "/welcome":
+        message = `Hey <@${user_name}>!`;
+        break;
+      case "/goodbye":
+        message = `Bye <@${user_name}>!`;
+        break;
+        break;
+      default:
+        message = "Unknown command!";
+    }
+
+    return res.send(message);
+  }
+
 
   res.status(200).send("ok");
 }
