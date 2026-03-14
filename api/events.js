@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         channel: event.channel,
-        text: `Hello <@${event.user}> :60fps_parrot:!\nWelcome to YappaVille!`,
+        text: `Hello @${user_name} :60fps_parrot:!\nWelcome to YappaVille!`,
       }),
     });
   }
