@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       case "/hello":
         message = `Hi <@${user_name}> :60fps_parrot:!`;
         break;
-      case "/hackatime":
+      case "/hct":
         const username = body.text.trim();
         const data1 = await fetch(`https://hackatime.hackclub.com/api/v1/users/${username}/stats`);
         const info = await data1.json()
