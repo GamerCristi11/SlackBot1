@@ -35,10 +35,13 @@ export default async function handler(req, res) {
 
   // ===Slash commands===
   if (body?.command) {
-    const { command, user_name } = body;
+    const { command, user_name, ts } = body;
     let message = "";
 
     switch (command) {
+      case "/help":
+        message = "Commands:\n- /hello: Say hello\n- /hct {username}: Get your Hackatime stats";
+        break;
       case "/hello":
         message = `Hi <@${user_name}> :60fps_parrot:!`;
         break;
@@ -54,7 +57,7 @@ export default async function handler(req, res) {
 
     }
 
-    return res.status(200).json({response_type: "in_channel", text: message });
+    return res.status(200).json({response_type: "in_channel", text: message, thread_ts: ts});
   }
 
   // ===Join message thing===
@@ -68,7 +71,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         channel: event.channel,
-        text: `Hello @${user_name} :60fps_parrot:!\nWelcome to YappaVille!`,
+        text: `Hello <@${user_name}> :60fps_parrot:!\nWelcome to YappaVille!`,
       }),
     });
   }
